@@ -104,6 +104,8 @@
       border: 2px solid var(--gold);
       overflow: hidden;
       flex-shrink: 0;
+      display: grid;
+      place-items: center;
     }
 
     .brand-title-group { display: flex; flex-direction: column; }
@@ -665,7 +667,7 @@
         <div class="hero-logo-frame">
           <img id="heroLogoImg" alt="PARUTHI Emblem" />
         </div>
-        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:600;">PARUTHI • Paruthilogo.webp</span>
+        <span id="logoStatusLabel" style="font-size:0.78rem;color:var(--text-muted);font-weight:600;">PARUTHI • Simple Edition, Tiny Tradition</span>
       </div>
 
       <div class="hero-copy">
@@ -818,6 +820,14 @@
 
   <script>
     const LOGO_IMAGE_SRC = "Paruthilogo.webp";
+    const FALLBACK_LOGO_SVG = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+        <circle cx="120" cy="120" r="112" fill="#FAD4D0" stroke="#D4AF37" stroke-width="6"/>
+        <text x="120" y="114" text-anchor="middle" font-family="Georgia, serif" font-size="34" font-weight="700" fill="#9E0B4B">PARUTHI</text>
+        <text x="120" y="142" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="14" fill="#6E4F5B">Simple Edition, Tiny Tradition</text>
+      </svg>`
+    );
+    const FALLBACK_PRODUCT_IMG = FALLBACK_LOGO_SVG;
 
     const STORE_CONFIG = {
       brandName: "PARUTHI",
@@ -843,7 +853,7 @@
         out_of_stock_sizes: ["5-6 Y"],
         stock_status: "In Stock",
         fabric: "100% Handloom Mulmul Cotton • Soft Lining",
-        image: "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?auto=format&fit=crop&w=700&q=80"
+        image: FALLBACK_PRODUCT_IMG
       },
       {
         id: "PRT-02",
@@ -855,7 +865,7 @@
         out_of_stock_sizes: [],
         stock_status: "In Stock",
         fabric: "Breathable Slub Cotton • Coconut Buttons",
-        image: "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=700&q=80"
+        image: FALLBACK_PRODUCT_IMG
       }
     ];
 
@@ -870,15 +880,35 @@
       cart = [];
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    function applyLogoImages() {
       const headerLogo = document.getElementById("headerLogoImg");
       const heroLogo = document.getElementById("heroLogoImg");
-      if (headerLogo) headerLogo.src = LOGO_IMAGE_SRC;
-      if (heroLogo) heroLogo.src = LOGO_IMAGE_SRC;
+      const labelEl = document.getElementById("logoStatusLabel");
 
-      document.getElementById("yearNow").textContent = new Date().getFullYear();
-      document.getElementById("shippingBannerText").textContent =
-        `Pure Cotton Craft • Free Shipping on Orders Above ₹${STORE_CONFIG.freeShippingAbove.toLocaleString("en-IN")}`;
+      [headerLogo, heroLogo].forEach(img => {
+        if (!img) return;
+        img.onerror = function () {
+          if (this.dataset.fallbackApplied) return;
+          this.dataset.fallbackApplied = "1";
+          this.src = FALLBACK_LOGO_SVG;
+          if (labelEl) {
+            labelEl.textContent = "Using built-in emblem (check Paruthilogo.webp path)";
+          }
+        };
+        img.src = LOGO_IMAGE_SRC;
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      applyLogoImages();
+
+      const yearEl = document.getElementById("yearNow");
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      const bannerEl = document.getElementById("shippingBannerText");
+      if (bannerEl) {
+        bannerEl.textContent = `Pure Cotton Craft • Free Shipping on Orders Above ₹${STORE_CONFIG.freeShippingAbove.toLocaleString("en-IN")}`;
+      }
 
       const generalWa = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent("Hi PARUTHI! I would like to know more about your cotton collection.")}`;
       ["navWaLink", "heroWaBtn", "footerWa", "floatingWa"].forEach(id => {
@@ -886,8 +916,14 @@
         if (el) el.href = generalWa;
       });
 
-      ["igLink", "footerIg"].forEach(id => { const el = document.getElementById(id); if (el) el.href = STORE_CONFIG.socialLinks.instagram; });
-      ["fbLink", "footerFb"].forEach(id => { const el = document.getElementById(id); if (el) el.href = STORE_CONFIG.socialLinks.facebook; });
+      ["igLink", "footerIg"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.href = STORE_CONFIG.socialLinks.instagram;
+      });
+      ["fbLink", "footerFb"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.href = STORE_CONFIG.socialLinks.facebook;
+      });
       const ytEl = document.getElementById("ytLink");
       if (ytEl) ytEl.href = STORE_CONFIG.socialLinks.youtube;
 
@@ -897,21 +933,71 @@
 
     async function loadCatalog() {
       const statusEl = document.getElementById("syncStatus");
+      products = DEMO_PRODUCTS;
+      initCategories();
+      renderProducts();
+
       if (!STORE_CONFIG.sheetCsvUrl) {
-        products = DEMO_PRODUCTS;
-        statusEl.textContent = "Preview Catalog • Ready for Google Sheets CSV";
-        initCategories();
-        renderProducts();
+        if (statusEl) statusEl.textContent = "Preview Catalog • Ready for Google Sheets CSV";
         return;
       }
 
+      const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+      const timer = controller ? setTimeout(() => controller.abort(), 5000) : null;
+
       try {
-        const res = await fetch(STORE_CONFIG.sheetCsvUrl, { cache: "no-store" });
+        const res = await fetch(STORE_CONFIG.sheetCsvUrl, {
+          cache: "no-store",
+          signal: controller ? controller.signal : undefined
+        });
+        if (!res.ok) throw new Error("HTTP " + res.status);
         const csvText = await res.text();
         const parsed = parseCsv(csvText);
         if (parsed.length > 0) {
           products = parsed;
-          statusEl.textContent = `Live stock synced (${parsed.length} items)`; } else { products = DEMO_PRODUCTS; statusEl.textContent = "Showing sample items (Sheet empty)"; } } catch (err) { products = DEMO_PRODUCTS; statusEl.textContent = "Offline / local preview mode"; }  initCategories(); renderProducts(); }  function parseCsv(text) { const rows = []; let cur = "", inQuotes = false, row = []; for (let i = 0; i < text.length; i++) { const ch = text[i], next = text[i + 1]; if (ch === '"' && inQuotes && next === '"') { cur += '"'; i++; } else if (ch === '"') { inQuotes = !inQuotes; } else if (ch === ',' && !inQuotes) { row.push(cur.trim()); cur = ""; } else if ((ch === '\n' \vert{}\vert{} ch === '\r') && !inQuotes) { if (cur !== "" \vert{}\vert{} row.length > 0) { row.push(cur.trim()); rows.push(row); } cur = ""; row = []; if (ch === '\r' && next === '\n') i++; } else { cur += ch; } } if (cur !== "" \vert{}\vert{} row.length > 0) { row.push(cur.trim()); rows.push(row); }  if (rows.length < 2) return []; const headers = rows[0].map(h => h.toLowerCase().replace(/\s+/g, "_"));  return rows.slice(1).filter(r => r[0] \vert{}\vert{} r[1]).map((r, idx) => { const obj = {}; headers.forEach((h, i) => obj[h] = (r[i] \vert{}\vert{} "").trim()); const sizes = (obj.sizes \vert{}\vert{} "S,M,L").split(",").map(s => s.trim()).filter(Boolean); const outSizes = (obj.out_of_stock_sizes \vert{}\vert{} "").split(",").map(s => s.trim()).filter(Boolean); return { id: obj.id \vert{}\vert{} `PRT-${idx + 1}`,
+          if (statusEl) statusEl.textContent = `Live stock synced (${parsed.length} items)`;
+          initCategories();
+          renderProducts();
+        } else if (statusEl) {
+          statusEl.textContent = "Showing sample stock (Sheet empty)";
+        }
+      } catch (_) {
+        if (statusEl) {
+          statusEl.textContent = location.protocol === "file:"
+            ? "Local file mode • Showing sample stock"
+            : "Showing sample stock • Check CSV publish setting";
+        }
+      } finally {
+        if (timer) clearTimeout(timer);
+      }
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let cur = "", inQuotes = false, row = [];
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i], next = text[i + 1];
+        if (ch === '"' && inQuotes && next === '"') { cur += '"'; i++; }
+        else if (ch === '"') { inQuotes = !inQuotes; }
+        else if (ch === ',' && !inQuotes) { row.push(cur.trim()); cur = ""; }
+        else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+          if (cur !== "" || row.length > 0) { row.push(cur.trim()); rows.push(row); }
+          cur = ""; row = [];
+          if (ch === '\r' && next === '\n') i++;
+        } else { cur += ch; }
+      }
+      if (cur !== "" || row.length > 0) { row.push(cur.trim()); rows.push(row); }
+
+      if (rows.length < 2) return [];
+      const headers = rows[0].map(h => h.toLowerCase().replace(/\s+/g, "_"));
+
+      return rows.slice(1).filter(r => r[0] || r[1]).map((r, idx) => {
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = (r[i] || "").trim());
+        const sizes = (obj.sizes || "S,M,L").split(",").map(s => s.trim()).filter(Boolean);
+        const outSizes = (obj.out_of_stock_sizes || "").split(",").map(s => s.trim()).filter(Boolean);
+        return {
+          id: obj.id || `PRT-${idx + 1}`,
           name: obj.name || "Cotton Garment",
           category: obj.category || "Collection",
           price: Number(obj.price) || 0,
@@ -920,7 +1006,7 @@
           out_of_stock_sizes: outSizes,
           stock_status: obj.stock_status || "In Stock",
           fabric: obj.fabric || "100% Pure Cotton",
-          image: obj.image || DEMO_PRODUCTS[0].image
+          image: obj.image || FALLBACK_PRODUCT_IMG
         };
       });
     }
@@ -928,6 +1014,7 @@
     function initCategories() {
       const cats = ["All", ...new Set(products.map(p => p.category))];
       const wrap = document.getElementById("categoryPills");
+      if (!wrap) return;
       wrap.innerHTML = cats.map(c => `
         <button type="button" class="cat-pill ${c === activeCategory ? "active" : ""}"
           onclick="setCategory('${c.replace(/'/g, "\\'")}')">${c}</button>
@@ -937,14 +1024,16 @@
     function setCategory(cat) {
       activeCategory = cat;
       document.querySelectorAll("#categoryPills .cat-pill").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.cat === cat || btn.textContent === cat);
+        btn.classList.toggle("active", btn.textContent === cat);
       });
       renderProducts();
     }
 
     function renderProducts() {
-      const q = document.getElementById("searchInput").value.trim().toLowerCase();
+      const searchEl = document.getElementById("searchInput");
+      const q = (searchEl ? searchEl.value : "").trim().toLowerCase();
       const grid = document.getElementById("productGrid");
+      if (!grid) return;
 
       const filtered = products.filter(p => {
         const matchCat = activeCategory === "All" || p.category === activeCategory;
@@ -974,7 +1063,8 @@
         return `
           <article class="product-card" data-pid="${p.id}">
             <div class="product-img-wrap">
-              <img src="${p.image}" alt="${p.name}" loading="lazy" />
+              <img src="${p.image || FALLBACK_PRODUCT_IMG}" alt="${p.name}" loading="lazy"
+                onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='${FALLBACK_PRODUCT_IMG}';}" />
               ${isAllSoldOut
                 ? `<span class="badge-tag badge-soldout">Sold Out</span>`
                 : discount > 0
@@ -1019,7 +1109,7 @@
 
     function selectSize(productId, size, btnEl) {
       selectedSizes[productId] = size;
-      const card = btnEl.closest(".product-card");
+      const card = btnEl ? btnEl.closest(".product-card") : null;
       if (card) {
         card.querySelectorAll(".size-btn").forEach(b => b.classList.remove("selected"));
         btnEl.classList.add("selected");
@@ -1046,7 +1136,7 @@
           name: product.name,
           size,
           price: product.price,
-          image: product.image,
+          image: product.image || FALLBACK_PRODUCT_IMG,
           qty: 1
         });
       }
@@ -1073,15 +1163,118 @@
 
     function updateCartUI() {
       const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
-      document.getElementById("cartCount").textContent = totalItems;
+      const countEl = document.getElementById("cartCount");
+      if (countEl) countEl.textContent = totalItems;
 
       const listEl = document.getElementById("cartItems");
+      if (listEl) {
+        if (cart.length === 0) {
+          listEl.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:40px 10px;">Your PARUTHI shopping bag is empty.</p>`;
+        } else {
+          listEl.innerHTML = cart.map(item => `
+            <div class="cart-item">
+              <img src="${item.image || FALLBACK_PRODUCT_IMG}" alt="${item.name}"
+                onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='${FALLBACK_PRODUCT_IMG}';}" />
+              <div class="cart-item-info">
+                <div class="cart-item-title">${item.name}</div>
+                <div class="cart-item-sub">Size: <strong>${item.size}</strong> • ₹${item.price.toLocaleString("en-IN")}</div>
+                <div class="qty-controls">
+                  <button type="button" class="qty-btn" onclick="changeQty('${item.key}', -1)">-</button>
+                  <span>${item.qty}</span>
+                  <button type="button" class="qty-btn" onclick="changeQty('${item.key}', 1)">+</button>
+                </div>
+              </div>
+              <div style="font-weight:700;color:var(--magenta);">₹${(item.price * item.qty).toLocaleString("en-IN")}</div>
+            </div>
+          `).join("");
+        }
+      }
+
+      const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+      const shipping = subtotal === 0 ? 0 : (subtotal >= STORE_CONFIG.freeShippingAbove ? 0 : STORE_CONFIG.shippingFlatRate);
+      const total = subtotal + shipping;
+
+      const subEl = document.getElementById("subtotalText");
+      const shipEl = document.getElementById("shippingText");
+      const totEl = document.getElementById("totalText");
+      if (subEl) subEl.textContent = `₹${subtotal.toLocaleString("en-IN")}`;
+      if (shipEl) shipEl.textContent = shipping === 0 && subtotal > 0 ? "FREE" : `₹${shipping.toLocaleString("en-IN")}`;
+      if (totEl) totEl.textContent = `₹${total.toLocaleString("en-IN")}`;
+    }
+
+    function checkoutWhatsApp() {
       if (cart.length === 0) {
-        listEl.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:40px 10px;">Your PARUTHI shopping bag is empty.</p>`;
-      } else {
-        listEl.innerHTML = cart.map(item => `
-          <div class="cart-item">
-            <img src="${item.image}" alt="${item.name}" />
-            <div class="cart-item-info">
-              <div class="cart-item-title">${item.name}</div>
-              <div class="cart-item-sub">Size: <strong>${item.size}</strong>
+        showToast("Your bag is empty. Add an item first!");
+        return;
+      }
+
+      const name = document.getElementById("custName").value.trim();
+      const phone = document.getElementById("custPhone").value.trim();
+      const address = document.getElementById("custAddress").value.trim();
+
+      if (!name || !phone || !address) {
+        showToast("Please fill in your Name, Phone, and Delivery Address.");
+        return;
+      }
+
+      const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+      const shipping = subtotal >= STORE_CONFIG.freeShippingAbove ? 0 : STORE_CONFIG.shippingFlatRate;
+      const total = subtotal + shipping;
+
+      const lines = cart.map((item, i) =>
+        `${i + 1}. ${item.name} (${item.size}) x${item.qty} = ₹${(item.price * item.qty).toLocaleString("en-IN")}`
+      ).join("\n");
+
+      const message =
+`Hello *PARUTHI*! I would like to place an order:
+
+*Order Details:*
+${lines}
+
+*Subtotal:* ₹${subtotal.toLocaleString("en-IN")}
+*Shipping:* ${shipping === 0 ? "FREE" : "₹" + shipping}
+*Total Payable:* ₹${total.toLocaleString("en-IN")}
+
+*Customer Details:*
+Name: ${name}
+Phone: ${phone}
+Address: ${address}`;
+
+      const url = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    function toggleCart(open) {
+      const drawer = document.getElementById("cartDrawer");
+      const backdrop = document.getElementById("backdrop");
+      if (drawer) drawer.classList.toggle("open", open);
+      if (backdrop) backdrop.classList.toggle("open", open);
+    }
+
+    function openSizeModal() {
+      const modal = document.getElementById("sizeModal");
+      const backdrop = document.getElementById("backdrop");
+      if (modal) modal.classList.add("open");
+      if (backdrop) backdrop.classList.add("open");
+    }
+
+    function closeAllOverlays() {
+      const drawer = document.getElementById("cartDrawer");
+      const modal = document.getElementById("sizeModal");
+      const backdrop = document.getElementById("backdrop");
+      if (drawer) drawer.classList.remove("open");
+      if (modal) modal.classList.remove("open");
+      if (backdrop) backdrop.classList.remove("open");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+  </script>
+</body>
+</html>
