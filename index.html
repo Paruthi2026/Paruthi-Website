@@ -28,15 +28,8 @@
       --radius-pill: 999px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -50,17 +43,11 @@
       font-family: 'Cormorant Garamond', Georgia, serif;
     }
 
-    /* ================= TOP ANNOUNCEMENT BAR ================= */
     .top-bar {
       background: linear-gradient(90deg, var(--magenta-dark), var(--magenta), var(--magenta-dark));
       color: var(--white);
       font-size: 0.82rem;
       padding: 8px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
     }
 
     .top-bar-inner {
@@ -70,31 +57,18 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
       gap: 12px;
     }
 
-    .top-social {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
+    .top-social { display: flex; align-items: center; gap: 14px; }
     .top-social a {
       color: var(--gold-light);
       text-decoration: none;
       font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: opacity 0.2s;
     }
+    .top-social a:hover { text-decoration: underline; }
 
-    .top-social a:hover {
-      opacity: 0.8;
-      text-decoration: underline;
-    }
-
-    /* ================= HEADER & NAVIGATION ================= */
     header {
       position: sticky;
       top: 0;
@@ -128,17 +102,11 @@
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #FFC2BB, var(--bg-coral));
       border: 2px solid var(--gold);
-      display: grid;
-      place-items: center;
-      box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+      overflow: hidden;
       flex-shrink: 0;
     }
 
-    .brand-title-group {
-      display: flex;
-      flex-direction: column;
-    }
-
+    .brand-title-group { display: flex; flex-direction: column; }
     .brand-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.55rem;
@@ -147,7 +115,6 @@
       color: var(--magenta);
       line-height: 1;
     }
-
     .brand-tagline {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
@@ -155,12 +122,7 @@
       color: var(--text-muted);
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-    }
-
+    .nav-links { display: flex; align-items: center; gap: 22px; }
     .nav-links button, .nav-links a {
       background: none;
       border: none;
@@ -170,18 +132,10 @@
       color: var(--text-dark);
       cursor: pointer;
       text-decoration: none;
-      transition: color 0.2s;
     }
+    .nav-links button:hover, .nav-links a:hover { color: var(--magenta); }
 
-    .nav-links button:hover, .nav-links a:hover {
-      color: var(--magenta);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
 
     .btn-outline-gold {
       background: var(--white);
@@ -192,12 +146,8 @@
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
     }
-
-    .btn-outline-gold:hover {
-      background: var(--magenta-soft);
-    }
+    .btn-outline-gold:hover { background: var(--magenta-soft); }
 
     .cart-trigger {
       background: var(--magenta);
@@ -211,13 +161,6 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 14px rgba(158, 11, 75, 0.22);
-      transition: transform 0.15s, background 0.2s;
-    }
-
-    .cart-trigger:hover {
-      background: var(--magenta-dark);
-      transform: translateY(-1px);
     }
 
     .cart-badge {
@@ -233,7 +176,6 @@
       padding: 0 5px;
     }
 
-    /* ================= HERO & 4-STAGE LOGO ANIMATION ================= */
     .hero {
       background: radial-gradient(circle at top center, #FFEAE8 0%, var(--bg-blush) 55%, var(--bg-cream) 100%);
       padding: 36px 20px 44px;
@@ -258,119 +200,26 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      position: relative;
+      gap: 12px;
     }
 
-    .emblem-svg {
+    .hero-logo-frame {
       width: 100%;
-      max-width: 350px;
-      height: auto;
-      overflow: visible;
-    }
-
-    /* 4-Stage SVG Keyframes: Bud -> Thread -> Needle -> Emblem */
-    .anim-rim {
-      stroke-dasharray: 1100;
-      stroke-dashoffset: 1100;
-      animation: drawRim 1.3s ease-out 2.3s forwards;
-    }
-
-    .anim-cotton-bud {
-      transform-origin: 268px 132px;
-      transform: scale(0.15);
-      opacity: 0;
-      animation: budBloom 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
-    }
-
-    .anim-calyx {
-      transform-origin: 268px 152px;
-      transform: scaleY(0.2);
-      opacity: 0;
-      animation: calyxOpen 0.9s ease-out 0.3s forwards;
-    }
-
-    .anim-thread {
-      stroke-dasharray: 520;
-      stroke-dashoffset: 520;
-      animation: spinAndThread 1.5s cubic-bezier(0.45, 0, 0.55, 1) 0.95s forwards;
-    }
-
-    .anim-needle {
-      opacity: 0;
-      transform: translate(-18px, -18px);
-      animation: needleLock 0.9s ease-out 1.55s forwards;
-    }
-
-    .anim-wordmark {
-      opacity: 0;
-      transform: translateY(8px);
-      animation: fadeSlideUp 0.8s ease-out 2.15s forwards;
-    }
-
-    .anim-tagline {
-      opacity: 0;
-      animation: fadeSlideUp 0.8s ease-out 2.45s forwards;
-    }
-
-    .anim-sketches {
-      opacity: 0;
-      animation: fadeSlideUp 0.9s ease-out 2.7s forwards;
-    }
-
-    @keyframes budBloom {
-      0% { transform: scale(0.15) rotate(-12deg); opacity: 0; }
-      65% { transform: scale(1.08) rotate(3deg); opacity: 1; }
-      100% { transform: scale(1) rotate(0deg); opacity: 1; }
-    }
-
-    @keyframes calyxOpen {
-      0% { transform: scaleY(0.2); opacity: 0; }
-      100% { transform: scaleY(1); opacity: 1; }
-    }
-
-    @keyframes spinAndThread {
-      0% { stroke-dashoffset: 520; opacity: 0.2; }
-      20% { opacity: 1; }
-      100% { stroke-dashoffset: 0; opacity: 1; }
-    }
-
-    @keyframes needleLock {
-      0% { opacity: 0; transform: translate(-18px, -18px); }
-      100% { opacity: 1; transform: translate(0, 0); }
-    }
-
-    @keyframes drawRim {
-      to { stroke-dashoffset: 0; }
-    }
-
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Replay state class */
-    .replay-reset * {
-      animation: none !important;
-    }
-
-    .replay-btn {
-      margin-top: 10px;
-      background: rgba(255, 255, 255, 0.85);
-      border: 1px solid var(--gold);
-      color: var(--magenta);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 5px 12px;
-      border-radius: var(--radius-pill);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: background 0.2s;
-    }
-
-    .replay-btn:hover {
+      max-width: 310px;
+      aspect-ratio: 1 / 1;
+      border-radius: 20px;
+      overflow: hidden;
       background: var(--white);
+      border: 1.5px solid rgba(212, 175, 55, 0.6);
+      display: grid;
+      place-items: center;
+    }
+
+    .hero-logo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     .hero-copy h1 {
@@ -418,12 +267,6 @@
       font-size: 0.95rem;
       text-decoration: none;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(158, 11, 75, 0.22);
-      transition: transform 0.15s;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
     }
 
     .btn-whatsapp-hero {
@@ -439,11 +282,6 @@
       align-items: center;
       gap: 8px;
       cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-whatsapp-hero:hover {
-      background: #177348;
     }
 
     .trust-strip {
@@ -454,20 +292,9 @@
       border-top: 1px dashed rgba(158, 11, 75, 0.22);
     }
 
-    .trust-item {
-      font-size: 0.82rem;
-      color: var(--text-dark);
-      font-weight: 600;
-    }
+    .trust-item { font-size: 0.82rem; color: var(--text-dark); font-weight: 600; }
+    .trust-item span { display: block; font-weight: 400; color: var(--text-muted); font-size: 0.76rem; }
 
-    .trust-item span {
-      display: block;
-      font-weight: 400;
-      color: var(--text-muted);
-      font-size: 0.76rem;
-    }
-
-    /* ================= CATALOG CONTROLS ================= */
     .catalog-section {
       max-width: 1220px;
       margin: 0 auto;
@@ -483,10 +310,7 @@
       margin-bottom: 24px;
     }
 
-    .section-header h2 {
-      font-size: 2.1rem;
-      color: var(--magenta-dark);
-    }
+    .section-header h2 { font-size: 2.1rem; color: var(--magenta-dark); }
 
     .sync-status {
       font-size: 0.8rem;
@@ -511,11 +335,7 @@
       box-shadow: var(--shadow-soft);
     }
 
-    .category-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+    .category-pills { display: flex; flex-wrap: wrap; gap: 8px; }
 
     .cat-pill {
       background: var(--bg-cream);
@@ -526,7 +346,6 @@
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
     }
 
     .cat-pill.active, .cat-pill:hover {
@@ -535,14 +354,7 @@
       border-color: var(--magenta);
     }
 
-    .search-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-      max-width: 300px;
-    }
-
+    .search-box { display: flex; align-items: center; gap: 8px; flex: 1; max-width: 300px; }
     .search-box input {
       width: 100%;
       padding: 9px 14px;
@@ -550,14 +362,8 @@
       border: 1px solid var(--border-soft);
       font-family: inherit;
       font-size: 0.88rem;
-      outline: none;
     }
 
-    .search-box input:focus {
-      border-color: var(--magenta);
-    }
-
-    /* ================= PRODUCT GRID ================= */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
@@ -572,12 +378,6 @@
       box-shadow: var(--shadow-soft);
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 36px rgba(158, 11, 75, 0.13);
     }
 
     .product-img-wrap {
@@ -587,16 +387,7 @@
       overflow: hidden;
     }
 
-    .product-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.35s ease;
-    }
-
-    .product-card:hover .product-img-wrap img {
-      transform: scale(1.04);
-    }
+    .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     .badge-tag {
       position: absolute;
@@ -612,87 +403,21 @@
       text-transform: uppercase;
     }
 
-    .badge-soldout {
-      background: #4A3B41;
-      border-color: #CCC;
-    }
+    .badge-soldout { background: #4A3B41; border-color: #CCC; }
 
-    .product-body {
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
+    .product-body { padding: 18px; display: flex; flex-direction: column; flex: 1; }
+    .product-meta { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 4px; }
+    .product-title { font-family: 'Cormorant Garamond', serif; font-size: 1.38rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; line-height: 1.2; }
+    .product-fabric { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px; }
 
-    .product-meta {
-      font-size: 0.76rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
+    .price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
+    .price-now { font-size: 1.18rem; font-weight: 700; color: var(--magenta); }
+    .price-old { font-size: 0.88rem; color: #9A858D; text-decoration: line-through; }
 
-    .product-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.38rem;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-bottom: 6px;
-      line-height: 1.2;
-    }
+    .size-label-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); margin-bottom: 7px; }
+    .size-guide-inline { color: var(--magenta); text-decoration: underline; cursor: pointer; background: none; border: none; font-size: 0.76rem; font-weight: 600; }
 
-    .product-fabric {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-
-    .price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .price-now {
-      font-size: 1.18rem;
-      font-weight: 700;
-      color: var(--magenta);
-    }
-
-    .price-old {
-      font-size: 0.88rem;
-      color: #9A858D;
-      text-decoration: line-through;
-    }
-
-    .size-label-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 7px;
-    }
-
-    .size-guide-inline {
-      color: var(--magenta);
-      text-decoration: underline;
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-size: 0.76rem;
-      font-weight: 600;
-    }
-
-    .size-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
-
+    .size-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
     .size-btn {
       min-width: 40px;
       padding: 6px 10px;
@@ -703,24 +428,9 @@
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s;
     }
-
-    .size-btn:hover:not(:disabled) {
-      border-color: var(--magenta);
-    }
-
-    .size-btn.selected {
-      background: var(--magenta);
-      color: var(--white);
-      border-color: var(--gold);
-    }
-
-    .size-btn:disabled {
-      opacity: 0.42;
-      text-decoration: line-through;
-      cursor: not-allowed;
-    }
+    .size-btn.selected { background: var(--magenta); color: var(--white); border-color: var(--gold); }
+    .size-btn:disabled { opacity: 0.42; text-decoration: line-through; cursor: not-allowed; }
 
     .add-cart-btn {
       margin-top: auto;
@@ -733,20 +443,9 @@
       font-weight: 600;
       font-size: 0.9rem;
       cursor: pointer;
-      transition: background 0.2s;
     }
+    .add-cart-btn:disabled { background: #B9A7AE; border-color: #B9A7AE; cursor: not-allowed; }
 
-    .add-cart-btn:hover:not(:disabled) {
-      background: var(--magenta-dark);
-    }
-
-    .add-cart-btn:disabled {
-      background: #B9A7AE;
-      border-color: #B9A7AE;
-      cursor: not-allowed;
-    }
-
-    /* ================= SHIPPING & INFO STRIP ================= */
     .info-section {
       background: linear-gradient(180deg, var(--bg-cream), #FCE9E7);
       border-top: 1px solid var(--border-soft);
@@ -770,29 +469,11 @@
       box-shadow: var(--shadow-soft);
     }
 
-    .info-card h3 {
-      font-size: 1.4rem;
-      color: var(--magenta);
-      margin-bottom: 8px;
-    }
+    .info-card h3 { font-size: 1.4rem; color: var(--magenta); margin-bottom: 8px; }
+    .info-card p, .info-card li { font-size: 0.9rem; color: var(--text-muted); }
+    .info-card ul { padding-left: 18px; margin-top: 6px; }
 
-    .info-card p, .info-card li {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .info-card ul {
-      padding-left: 18px;
-      margin-top: 6px;
-    }
-
-    /* ================= FOOTER ================= */
-    footer {
-      background: var(--magenta-dark);
-      color: #FCE8F0;
-      padding: 38px 20px 26px;
-    }
-
+    footer { background: var(--magenta-dark); color: #FCE8F0; padding: 38px 20px 26px; }
     .footer-inner {
       max-width: 1220px;
       margin: 0 auto;
@@ -803,39 +484,11 @@
       padding-bottom: 24px;
       border-bottom: 1px solid rgba(243, 229, 171, 0.22);
     }
+    .footer-brand h3 { font-size: 1.7rem; color: var(--gold-light); letter-spacing: 0.06em; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+    .footer-links a { color: var(--white); text-decoration: none; font-size: 0.9rem; }
+    .copyright { max-width: 1220px; margin: 18px auto 0; font-size: 0.8rem; color: rgba(255, 255, 255, 0.72); text-align: center; }
 
-    .footer-brand h3 {
-      font-size: 1.7rem;
-      color: var(--gold-light);
-      letter-spacing: 0.06em;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      align-items: center;
-    }
-
-    .footer-links a {
-      color: var(--white);
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
-
-    .footer-links a:hover {
-      color: var(--gold-light);
-    }
-
-    .copyright {
-      max-width: 1220px;
-      margin: 18px auto 0;
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.72);
-      text-align: center;
-    }
-
-    /* ================= FLOATING WHATSAPP ================= */
     .floating-wa {
       position: fixed;
       bottom: 22px;
@@ -849,31 +502,16 @@
       font-weight: 700;
       font-size: 0.9rem;
       box-shadow: 0 10px 26px rgba(30, 142, 90, 0.35);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: transform 0.2s;
     }
 
-    .floating-wa:hover {
-      transform: translateY(-2px);
-    }
-
-    /* ================= CART DRAWER & MODALS ================= */
     .backdrop {
       position: fixed;
       inset: 0;
       background: rgba(43, 23, 32, 0.5);
       z-index: 110;
       display: none;
-      opacity: 0;
-      transition: opacity 0.25s;
     }
-
-    .backdrop.open {
-      display: block;
-      opacity: 1;
-    }
+    .backdrop.open { display: block; }
 
     .cart-drawer {
       position: fixed;
@@ -887,12 +525,9 @@
       display: flex;
       flex-direction: column;
       box-shadow: -10px 0 36px rgba(0, 0, 0, 0.16);
-      transition: right 0.3s ease;
+      transition: right 0.25s ease;
     }
-
-    .cart-drawer.open {
-      right: 0;
-    }
+    .cart-drawer.open { right: 0; }
 
     .drawer-head {
       padding: 18px 20px;
@@ -902,86 +537,21 @@
       justify-content: space-between;
       align-items: center;
     }
+    .drawer-head h3 { font-size: 1.5rem; color: var(--magenta-dark); }
+    .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--magenta-dark); }
 
-    .drawer-head h3 {
-      font-size: 1.5rem;
-      color: var(--magenta-dark);
-    }
+    .cart-items { flex: 1; overflow-y: auto; padding: 16px 20px; }
+    .cart-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-soft); align-items: center; }
+    .cart-item img { width: 62px; height: 68px; object-fit: cover; border-radius: 10px; background: #FDECEB; }
+    .cart-item-info { flex: 1; }
+    .cart-item-title { font-weight: 700; font-size: 0.92rem; }
+    .cart-item-sub { font-size: 0.8rem; color: var(--text-muted); }
 
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--magenta-dark);
-      line-height: 1;
-    }
+    .qty-controls { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; }
+    .qty-btn { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--border-soft); background: var(--bg-cream); cursor: pointer; font-weight: 700; }
 
-    .cart-items {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px 20px;
-    }
-
-    .cart-item {
-      display: flex;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border-soft);
-      align-items: center;
-    }
-
-    .cart-item img {
-      width: 62px;
-      height: 68px;
-      object-fit: cover;
-      border-radius: 10px;
-      background: #FDECEB;
-    }
-
-    .cart-item-info {
-      flex: 1;
-    }
-
-    .cart-item-title {
-      font-weight: 700;
-      font-size: 0.92rem;
-    }
-
-    .cart-item-sub {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .qty-controls {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .qty-btn {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      border: 1px solid var(--border-soft);
-      background: var(--bg-cream);
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .drawer-footer {
-      padding: 16px 20px 20px;
-      border-top: 1px solid var(--border-soft);
-      background: var(--bg-cream);
-    }
-
-    .checkout-fields {
-      display: grid;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
+    .drawer-footer { padding: 16px 20px 20px; border-top: 1px solid var(--border-soft); background: var(--bg-cream); }
+    .checkout-fields { display: grid; gap: 8px; margin-bottom: 12px; }
     .checkout-fields input, .checkout-fields textarea {
       width: 100%;
       padding: 9px 12px;
@@ -991,13 +561,7 @@
       font-size: 0.85rem;
     }
 
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.88rem;
-      margin-bottom: 5px;
-    }
-
+    .summary-row { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 5px; }
     .summary-total {
       display: flex;
       justify-content: space-between;
@@ -1013,7 +577,7 @@
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0.95);
+      transform: translate(-50%, -50%);
       width: 92%;
       max-width: 580px;
       background: var(--white);
@@ -1024,29 +588,11 @@
       display: none;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
     }
+    .modal.open { display: block; }
 
-    .modal.open {
-      display: block;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .size-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 14px;
-      font-size: 0.88rem;
-    }
-
-    .size-table th, .size-table td {
-      border: 1px solid var(--border-soft);
-      padding: 9px 10px;
-      text-align: center;
-    }
-
-    .size-table th {
-      background: var(--bg-blush);
-      color: var(--magenta-dark);
-    }
+    .size-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.88rem; }
+    .size-table th, .size-table td { border: 1px solid var(--border-soft); padding: 9px 10px; text-align: center; }
+    .size-table th { background: var(--bg-blush); color: var(--magenta-dark); }
 
     .toast {
       position: fixed;
@@ -1062,32 +608,18 @@
       pointer-events: none;
       transition: opacity 0.25s;
     }
-
-    .toast.show {
-      opacity: 1;
-    }
+    .toast.show { opacity: 1; }
 
     @media (max-width: 860px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      .hero-copy p {
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .hero-cta-row {
-        justify-content: center;
-      }
-      .nav-links {
-        display: none;
-      }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-copy p { margin-left: auto; margin-right: auto; }
+      .hero-cta-row { justify-content: center; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP ANNOUNCEMENT & SOCIAL MEDIA BAR -->
   <div class="top-bar">
     <div class="top-bar-inner">
       <span id="shippingBannerText">Pure Cotton Craft • Free Shipping on Orders Above ₹1,499</span>
@@ -1099,12 +631,11 @@
     </div>
   </div>
 
-  <!-- STICKY HEADER -->
   <header>
     <div class="nav-wrap">
       <a href="#top" class="brand-link">
-        <div class="brand-mini-badge" aria-hidden="true" style="overflow:hidden;padding:0;">
-          <img id="headerLogoImg" alt="PARUTHI Logo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+        <div class="brand-mini-badge" aria-hidden="true">
+          <img id="headerLogoImg" alt="PARUTHI Logo" style="width:100%;height:100%;object-fit:cover;display:block;" />
         </div>
         <div class="brand-title-group">
           <span class="brand-name">PARUTHI</span>
@@ -1128,105 +659,13 @@
     </div>
   </header>
 
-  <!-- HERO WITH 4-STAGE COTTON-TO-NEEDLE PARUTHI EMBLEM ANIMATION -->
   <section class="hero" id="top">
     <div class="hero-inner">
       <div class="emblem-stage-card">
-        <svg id="paruthiEmblem" class="emblem-svg" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PARUTHI Animated Logo">
-          <defs>
-            <radialGradient id="coralFace" cx="45%" cy="35%" r="65%">
-              <stop offset="0%" stop-color="#FFC6BF" />
-              <stop offset="60%" stop-color="#F7ABA3" />
-              <stop offset="100%" stop-color="#EE9389" />
-            </radialGradient>
-            <linearGradient id="goldRim" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#FFF0A8" />
-              <stop offset="35%" stop-color="#D4AF37" />
-              <stop offset="70%" stop-color="#9A7B1C" />
-              <stop offset="100%" stop-color="#F6E28A" />
-            </linearGradient>
-            <linearGradient id="magentaSilk" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#C91863" />
-              <stop offset="55%" stop-color="#9E0B4B" />
-              <stop offset="100%" stop-color="#690430" />
-            </linearGradient>
-          </defs>
-
-          <!-- Circular Emblem Background -->
-          <circle cx="180" cy="180" r="164" fill="url(#coralFace)" />
-
-          <!-- Outer & Inner Gold Trim Rings -->
-          <circle class="anim-rim" cx="180" cy="180" r="166" fill="none" stroke="url(#goldRim)" stroke-width="6" />
-          <circle class="anim-rim" cx="180" cy="180" r="158" fill="none" stroke="url(#goldRim)" stroke-width="2" />
-
-          <!-- Stage 1: Cotton Boll Blooming on Right -->
-          <g class="anim-cotton-bud">
-            <!-- Fluffy Cotton Bolls -->
-            <circle cx="252" cy="128" r="17" fill="#FFFDF9" stroke="#E5C890" stroke-width="1.5" />
-            <circle cx="284" cy="128" r="17" fill="#FFFDF9" stroke="#E5C890" stroke-width="1.5" />
-            <circle cx="268" cy="113" r="18" fill="#FFFFFF" stroke="#E5C890" stroke-width="1.5" />
-            <circle cx="268" cy="133" r="19" fill="#FFF9F0" stroke="#DFC086" stroke-width="1.5" />
-          </g>
-          <!-- Magenta & Gold Calyx Leaves -->
-          <g class="anim-calyx">
-            <path d="M268 156 C255 148, 236 146, 228 138 C240 137, 254 140, 268 150 Z" fill="url(#magentaSilk)" stroke="#D4AF37" stroke-width="1" />
-            <path d="M268 156 C281 148, 300 146, 308 138 C296 137, 282 140, 268 150 Z" fill="url(#magentaSilk)" stroke="#D4AF37" stroke-width="1" />
-            <path d="M268 156 C260 142, 260 130, 268 122 C276 130, 276 142, 268 156 Z" fill="url(#magentaSilk)" stroke="#D4AF37" stroke-width="1" />
-            <path d="M268 156 L265 166 L271 163 Z" fill="#8A0940" />
-          </g>
-
-          <!-- Stage 2 & 3: Thread Spinning from Cotton & Threading Through Needle Eye -->
-          <path class="anim-thread"
-            d="M254 134 C230 122, 212 96, 178 92 C148 88, 126 78, 118 68 C132 86, 165 96, 198 106 C228 116, 224 152, 186 156 C144 160, 74 146, 54 176 C42 194, 58 208, 78 206"
-            fill="none"
-            stroke="url(#magentaSilk)"
-            stroke-width="4.2"
-            stroke-linecap="round"
-          />
-
-          <!-- Stage 3: Needle Forming Stylized Letter 'P' -->
-          <g class="anim-needle">
-            <path d="M188 74 C172 68, 148 104, 66 254 C64 258, 68 260, 72 256 C158 122, 194 86, 188 74 Z"
-                  fill="url(#magentaSilk)" stroke="url(#goldRim)" stroke-width="2" />
-            <!-- Needle Eye -->
-            <ellipse cx="173" cy="92" rx="4.2" ry="11" transform="rotate(34 173 92)" fill="#F9B4AC" stroke="url(#goldRim)" stroke-width="1.6" />
-          </g>
-
-          <!-- Stage 4: 'ARUTHI' Wordmark -->
-          <text class="anim-wordmark" x="132" y="206"
-                font-family="'Cormorant Garamond', Georgia, serif"
-                font-size="45"
-                font-weight="700"
-                letter-spacing="2.5"
-                fill="url(#magentaSilk)"
-                stroke="#F7E29C"
-                stroke-width="0.9">ARUTHI</text>
-
-          <!-- Tagline with Side Rules -->
-          <g class="anim-tagline">
-            <line x1="56" y1="224" x2="112" y2="224" stroke="#9E0B4B" stroke-width="2" stroke-linecap="round" />
-            <text x="180" y="228" text-anchor="middle"
-                  font-family="'Cormorant Garamond', Georgia, serif"
-                  font-style="italic"
-                  font-size="14.5"
-                  font-weight="600"
-                  fill="#8B0840">Simple Edition, Tiny Tradition</text>
-            <line x1="248" y1="224" x2="304" y2="224" stroke="#9E0B4B" stroke-width="2" stroke-linecap="round" />
-          </g>
-
-          <!-- Faint Garment Sketches (Frock & Overalls) -->
-          <g class="anim-sketches" opacity="0.28" stroke="#9E0B4B" stroke-width="1.3" fill="none">
-            <!-- Little Frock Outline -->
-            <path d="M118 248 L128 244 L138 248 L135 262 L148 294 L108 294 L121 262 Z" />
-            <path d="M123 246 Q128 252 133 246" />
-            <!-- Little Overalls Outline -->
-            <path d="M216 246 L221 246 L222 258 L236 258 L237 246 L242 246 L244 274 L247 294 L232 294 L229 282 L226 294 L211 294 L214 274 Z" />
-          </g>
-        </svg>
-
-        <button type="button" class="replay-btn" onclick="replayLogoAnimation()">
-          &#8635; Replay Cotton-to-Needle Animation
-        </button>
+        <div class="hero-logo-frame">
+          <img id="heroLogoImg" alt="PARUTHI Emblem" />
+        </div>
+        <span style="font-size:0.78rem;color:var(--text-muted);font-weight:600;">PARUTHI • Paruthilogo.webp</span>
       </div>
 
       <div class="hero-copy">
@@ -1245,29 +684,17 @@
         </div>
 
         <div class="trust-strip">
-          <div class="trust-item">
-            100% Pure Cotton
-            <span>Gentle, breathable weave</span>
-          </div>
-          <div class="trust-item">
-            Live Stock Sync
-            <span>Updated straight from sheet</span>
-          </div>
-          <div class="trust-item">
-            Easy Size Exchange
-            <span>Clear measurement guide</span>
-          </div>
+          <div class="trust-item">100% Pure Cotton<span>Gentle, breathable weave</span></div>
+          <div class="trust-item">Live Stock Sync<span>Updated straight from sheet</span></div>
+          <div class="trust-item">Easy Size Exchange<span>Clear measurement guide</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PRODUCT CATALOG SECTION -->
   <section class="catalog-section" id="collection">
     <div class="section-header">
-      <div>
-        <h2>Little Wardrobe &amp; Cotton Collection</h2>
-      </div>
+      <div><h2>Little Wardrobe &amp; Cotton Collection</h2></div>
       <div class="sync-status" id="syncStatus">Loading catalog...</div>
     </div>
 
@@ -1283,7 +710,6 @@
     <div class="product-grid" id="productGrid"></div>
   </section>
 
-  <!-- SHIPPING DETAILS & SIZE REFERENCE SECTION -->
   <section class="info-section" id="shipping-info">
     <div class="info-grid">
       <div class="info-card">
@@ -1316,7 +742,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
@@ -1339,15 +764,9 @@
     </div>
   </footer>
 
-  <!-- FLOATING WHATSAPP BUTTON -->
-  <a id="floatingWa" class="floating-wa" href="#" target="_blank" rel="noopener">
-    WhatsApp Us
-  </a>
-
-  <!-- BACKDROP -->
+  <a id="floatingWa" class="floating-wa" href="#" target="_blank" rel="noopener">WhatsApp Us</a>
   <div class="backdrop" id="backdrop" onclick="closeAllOverlays()"></div>
 
-  <!-- SLIDE-OVER SHOPPING CART DRAWER -->
   <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Bag">
     <div class="drawer-head">
       <h3>Your Shopping Bag</h3>
@@ -1363,18 +782,9 @@
         <textarea id="custAddress" rows="2" placeholder="Delivery Address & Pincode *"></textarea>
       </div>
 
-      <div class="summary-row">
-        <span>Subtotal</span>
-        <span id="subtotalText">₹0</span>
-      </div>
-      <div class="summary-row">
-        <span>Shipping</span>
-        <span id="shippingText">₹0</span>
-      </div>
-      <div class="summary-total">
-        <span>Total Payable</span>
-        <span id="totalText">₹0</span>
-      </div>
+      <div class="summary-row"><span>Subtotal</span><span id="subtotalText">₹0</span></div>
+      <div class="summary-row"><span>Shipping</span><span id="shippingText">₹0</span></div>
+      <div class="summary-total"><span>Total Payable</span><span id="totalText">₹0</span></div>
 
       <button type="button" class="btn-whatsapp-hero" style="width: 100%; justify-content: center;" onclick="checkoutWhatsApp()">
         Order via WhatsApp
@@ -1382,7 +792,6 @@
     </div>
   </aside>
 
-  <!-- SIZE REFERENCE MODAL -->
   <div class="modal" id="sizeModal" role="dialog" aria-modal="true" aria-labelledby="sizeModalTitle">
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <h3 id="sizeModalTitle" style="font-size: 1.65rem; color: var(--magenta);">PARUTHI Size Reference Chart</h3>
@@ -1391,15 +800,9 @@
     <p style="font-size: 0.86rem; color: var(--text-muted); margin-top: 4px;">
       Measurements are garment dimensions in inches (allow &plusmn;0.5 in tolerance).
     </p>
-
     <table class="size-table">
       <thead>
-        <tr>
-          <th>Size / Age</th>
-          <th>Chest (in)</th>
-          <th>Waist (in)</th>
-          <th>Length (in)</th>
-        </tr>
+        <tr><th>Size / Age</th><th>Chest (in)</th><th>Waist (in)</th><th>Length (in)</th></tr>
       </thead>
       <tbody>
         <tr><td>1-2 Y (XS)</td><td>21"</td><td>20"</td><td>19"</td></tr>
@@ -1411,20 +814,15 @@
     </table>
   </div>
 
-  <!-- TOAST NOTIFICATION -->
   <div class="toast" id="toast"></div>
 
   <script>
-    /* =====================================================================
-       1. STOREFRONT CONFIGURATION (EDIT YOUR DETAILS HERE)
-       ===================================================================== */
-    const STORE_CONFIG = {
-     const LOGO_IMAGE_SRC = "Paruthilogo.webp";
+    const LOGO_IMAGE_SRC = "Paruthilogo.webp";
 
     const STORE_CONFIG = {
       brandName: "PARUTHI",
       whatsappNumber: "917339478996",
-      sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSF74AI53C07B9YrPYiT_RkQeFndjemz6o2g_cL7jDfqfmY-k-hJuFtKjGRtvvvn31sSFri8NyByKRE/pub?output=csv", // Paste your Google Sheets "Publish to web -> CSV" link here
+      sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSF74AI53C07B9YrPYiT_RkQeFndjemz6o2g_cL7jDfqfmY-k-hJuFtKjGRtvvvn31sSFri8NyByKRE/pub?output=csv",
       shippingFlatRate: 70,
       freeShippingAbove: 1499,
       socialLinks: {
@@ -1434,11 +832,6 @@
       }
     };
 
-    /* =====================================================================
-       2. DEMO FALLBACK CATALOG (USED UNTIL YOUR GOOGLE SHEET CSV IS LINKED)
-       Expected CSV Columns:
-       id, name, category, price, original_price, sizes, out_of_stock_sizes, stock_status, fabric, image
-       ===================================================================== */
     const DEMO_PRODUCTS = [
       {
         id: "PRT-01",
@@ -1463,44 +856,26 @@
         stock_status: "In Stock",
         fabric: "Breathable Slub Cotton • Coconut Buttons",
         image: "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=700&q=80"
-      },
-      {
-        id: "PRT-03",
-        name: "Coral Bloom Everyday Dress",
-        category: "Frocks",
-        price: 749,
-        original_price: 899,
-        sizes: ["2-3 Y", "3-4 Y", "5-6 Y", "7-8 Y"],
-        out_of_stock_sizes: ["2-3 Y"],
-        stock_status: "In Stock",
-        fabric: "Organic Cambric Cotton • Pre-Washed",
-        image: "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=700&q=80"
-      },
-      {
-        id: "PRT-04",
-        name: "Heritage Weave Kurta & Shorts",
-        category: "Festive Cotton",
-        price: 949,
-        original_price: 1199,
-        sizes: ["1-2 Y", "2-3 Y", "3-4 Y", "5-6 Y"],
-        out_of_stock_sizes: [],
-        stock_status: "In Stock",
-        fabric: "Pure South Cotton • Gold Zari Border",
-        image: "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?auto=format&fit=crop&w=700&q=80"
       }
     ];
 
     let products = [];
     let selectedSizes = {};
     let activeCategory = "All";
-    let cart = JSON.parse(localStorage.getItem("paruthi_cart") || "[]");
+    let cart = [];
 
-    /* =====================================================================
-       3. INITIALIZATION & SOCIAL / WHATSAPP LINKS
-       ===================================================================== */
+    try {
+      cart = JSON.parse(localStorage.getItem("paruthi_cart") || "[]");
+    } catch (_) {
+      cart = [];
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("headerLogoImg").src = LOGO_IMAGE_SRC;
-      document.getElementById("heroLogoImg").src = LOGO_IMAGE_SRC;
+      const headerLogo = document.getElementById("headerLogoImg");
+      const heroLogo = document.getElementById("heroLogoImg");
+      if (headerLogo) headerLogo.src = LOGO_IMAGE_SRC;
+      if (heroLogo) heroLogo.src = LOGO_IMAGE_SRC;
+
       document.getElementById("yearNow").textContent = new Date().getFullYear();
       document.getElementById("shippingBannerText").textContent =
         `Pure Cotton Craft • Free Shipping on Orders Above ₹${STORE_CONFIG.freeShippingAbove.toLocaleString("en-IN")}`;
@@ -1511,17 +886,15 @@
         if (el) el.href = generalWa;
       });
 
-      ["igLink", "footerIg"].forEach(id => document.getElementById(id).href = STORE_CONFIG.socialLinks.instagram);
-      ["fbLink", "footerFb"].forEach(id => document.getElementById(id).href = STORE_CONFIG.socialLinks.facebook);
-      document.getElementById("ytLink").href = STORE_CONFIG.socialLinks.youtube;
+      ["igLink", "footerIg"].forEach(id => { const el = document.getElementById(id); if (el) el.href = STORE_CONFIG.socialLinks.instagram; });
+      ["fbLink", "footerFb"].forEach(id => { const el = document.getElementById(id); if (el) el.href = STORE_CONFIG.socialLinks.facebook; });
+      const ytEl = document.getElementById("ytLink");
+      if (ytEl) ytEl.href = STORE_CONFIG.socialLinks.youtube;
 
       loadCatalog();
       updateCartUI();
     });
 
-    /* =====================================================================
-       4. GOOGLE SHEETS / EXCEL CSV PARSER
-       ===================================================================== */
     async function loadCatalog() {
       const statusEl = document.getElementById("syncStatus");
       if (!STORE_CONFIG.sheetCsvUrl) {
@@ -1533,51 +906,12 @@
       }
 
       try {
-        const res = await fetch(STORE_CONFIG.sheetCsvUrl);
+        const res = await fetch(STORE_CONFIG.sheetCsvUrl, { cache: "no-store" });
         const csvText = await res.text();
         const parsed = parseCsv(csvText);
         if (parsed.length > 0) {
           products = parsed;
-          statusEl.textContent = "Live stock & prices synced from Sheet";
-        } else {
-          products = DEMO_PRODUCTS;
-          statusEl.textContent = "Showing sample items (Sheet empty)";
-        }
-      } catch (err) {
-        products = DEMO_PRODUCTS;
-        statusEl.textContent = "Offline preview mode";
-      }
-
-      initCategories();
-      renderProducts();
-    }
-
-    function parseCsv(text) {
-      const rows = [];
-      let cur = "", inQuotes = false, row = [];
-      for (let i = 0; i < text.length; i++) {
-        const ch = text[i], next = text[i + 1];
-        if (ch === '"' && inQuotes && next === '"') { cur += '"'; i++; }
-        else if (ch === '"') { inQuotes = !inQuotes; }
-        else if (ch === ',' && !inQuotes) { row.push(cur.trim()); cur = ""; }
-        else if ((ch === '\n' || ch === '\r') && !inQuotes) {
-          if (cur !== "" || row.length > 0) { row.push(cur.trim()); rows.push(row); }
-          cur = ""; row = [];
-          if (ch === '\r' && next === '\n') i++;
-        } else { cur += ch; }
-      }
-      if (cur !== "" || row.length > 0) { row.push(cur.trim()); rows.push(row); }
-
-      if (rows.length < 2) return [];
-      const headers = rows[0].map(h => h.toLowerCase().replace(/\s+/g, "_"));
-
-      return rows.slice(1).filter(r => r[0] || r[1]).map((r, idx) => {
-        const obj = {};
-        headers.forEach((h, i) => obj[h] = (r[i] || "").trim());
-        const sizes = (obj.sizes || "S,M,L").split(",").map(s => s.trim()).filter(Boolean);
-        const outSizes = (obj.out_of_stock_sizes || "").split(",").map(s => s.trim()).filter(Boolean);
-        return {
-          id: obj.id || `PRT-${idx + 1}`,
+          statusEl.textContent = `Live stock synced (${parsed.length} items)`; } else { products = DEMO_PRODUCTS; statusEl.textContent = "Showing sample items (Sheet empty)"; } } catch (err) { products = DEMO_PRODUCTS; statusEl.textContent = "Offline / local preview mode"; }  initCategories(); renderProducts(); }  function parseCsv(text) { const rows = []; let cur = "", inQuotes = false, row = []; for (let i = 0; i < text.length; i++) { const ch = text[i], next = text[i + 1]; if (ch === '"' && inQuotes && next === '"') { cur += '"'; i++; } else if (ch === '"') { inQuotes = !inQuotes; } else if (ch === ',' && !inQuotes) { row.push(cur.trim()); cur = ""; } else if ((ch === '\n' \vert{}\vert{} ch === '\r') && !inQuotes) { if (cur !== "" \vert{}\vert{} row.length > 0) { row.push(cur.trim()); rows.push(row); } cur = ""; row = []; if (ch === '\r' && next === '\n') i++; } else { cur += ch; } } if (cur !== "" \vert{}\vert{} row.length > 0) { row.push(cur.trim()); rows.push(row); }  if (rows.length < 2) return []; const headers = rows[0].map(h => h.toLowerCase().replace(/\s+/g, "_"));  return rows.slice(1).filter(r => r[0] \vert{}\vert{} r[1]).map((r, idx) => { const obj = {}; headers.forEach((h, i) => obj[h] = (r[i] \vert{}\vert{} "").trim()); const sizes = (obj.sizes \vert{}\vert{} "S,M,L").split(",").map(s => s.trim()).filter(Boolean); const outSizes = (obj.out_of_stock_sizes \vert{}\vert{} "").split(",").map(s => s.trim()).filter(Boolean); return { id: obj.id \vert{}\vert{} `PRT-${idx + 1}`,
           name: obj.name || "Cotton Garment",
           category: obj.category || "Collection",
           price: Number(obj.price) || 0,
@@ -1591,9 +925,6 @@
       });
     }
 
-    /* =====================================================================
-       5. RENDER CATEGORIES & PRODUCT CARDS
-       ===================================================================== */
     function initCategories() {
       const cats = ["All", ...new Set(products.map(p => p.category))];
       const wrap = document.getElementById("categoryPills");
@@ -1605,7 +936,9 @@
 
     function setCategory(cat) {
       activeCategory = cat;
-      initCategories();
+      document.querySelectorAll("#categoryPills .cat-pill").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.cat === cat || btn.textContent === cat);
+      });
       renderProducts();
     }
 
@@ -1639,7 +972,7 @@
           : 0;
 
         return `
-          <article class="product-card">
+          <article class="product-card" data-pid="${p.id}">
             <div class="product-img-wrap">
               <img src="${p.image}" alt="${p.name}" loading="lazy" />
               ${isAllSoldOut
@@ -1670,7 +1003,7 @@
                   const isSel = !oos && activeSize === sz;
                   return `<button type="button" class="size-btn ${isSel ? "selected" : ""}"
                     ${oos ? "disabled" : ""}
-                    onclick="selectSize('${p.id}', '${sz}')">${sz}</button>`;
+                    onclick="selectSize('${p.id}', '${sz.replace(/'/g, "\\'")}', this)">${sz}</button>`;
                 }).join("")}
               </div>
 
@@ -1684,14 +1017,15 @@
       }).join("");
     }
 
-    function selectSize(productId, size) {
+    function selectSize(productId, size, btnEl) {
       selectedSizes[productId] = size;
-      renderProducts();
+      const card = btnEl.closest(".product-card");
+      if (card) {
+        card.querySelectorAll(".size-btn").forEach(b => b.classList.remove("selected"));
+        btnEl.classList.add("selected");
+      }
     }
 
-    /* =====================================================================
-       6. SHOPPING CART & WHATSAPP ORDER GENERATOR
-       ===================================================================== */
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
       if (!product) return;
@@ -1732,7 +1066,9 @@
     }
 
     function saveCart() {
-      localStorage.setItem("paruthi_cart", JSON.stringify(cart));
+      try {
+        localStorage.setItem("paruthi_cart", JSON.stringify(cart));
+      } catch (_) {}
     }
 
     function updateCartUI() {
@@ -1748,102 +1084,4 @@
             <img src="${item.image}" alt="${item.name}" />
             <div class="cart-item-info">
               <div class="cart-item-title">${item.name}</div>
-              <div class="cart-item-sub">Size: <strong>${item.size}</strong> • ₹${item.price.toLocaleString("en-IN")}</div>
-              <div class="qty-controls">
-                <button type="button" class="qty-btn" onclick="changeQty('${item.key}', -1)">-</button>
-                <span>${item.qty}</span>
-                <button type="button" class="qty-btn" onclick="changeQty('${item.key}', 1)">+</button>
-              </div>
-            </div>
-            <div style="font-weight:700;color:var(--magenta);">₹${(item.price * item.qty).toLocaleString("en-IN")}</div>
-          </div>
-        `).join("");
-      }
-
-      const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-      const shipping = subtotal === 0 ? 0 : (subtotal >= STORE_CONFIG.freeShippingAbove ? 0 : STORE_CONFIG.shippingFlatRate);
-      const total = subtotal + shipping;
-
-      document.getElementById("subtotalText").textContent = `₹${subtotal.toLocaleString("en-IN")}`;
-      document.getElementById("shippingText").textContent = shipping === 0 && subtotal > 0 ? "FREE" : `₹${shipping.toLocaleString("en-IN")}`;
-      document.getElementById("totalText").textContent = `₹${total.toLocaleString("en-IN")}`;
-    }
-
-    function checkoutWhatsApp() {
-      if (cart.length === 0) {
-        showToast("Your bag is empty. Add an item first!");
-        return;
-      }
-
-      const name = document.getElementById("custName").value.trim();
-      const phone = document.getElementById("custPhone").value.trim();
-      const address = document.getElementById("custAddress").value.trim();
-
-      if (!name || !phone || !address) {
-        showToast("Please fill in your Name, Phone, and Delivery Address.");
-        return;
-      }
-
-      const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-      const shipping = subtotal >= STORE_CONFIG.freeShippingAbove ? 0 : STORE_CONFIG.shippingFlatRate;
-      const total = subtotal + shipping;
-
-      const lines = cart.map((item, i) =>
-        `${i + 1}. ${item.name} (${item.size}) x${item.qty} = ₹${(item.price * item.qty).toLocaleString("en-IN")}`
-      ).join("\n");
-
-      const message =
-`Hello *PARUTHI*! I would like to place an order:
-
-*Order Details:*
-${lines}
-
-*Subtotal:* ₹${subtotal.toLocaleString("en-IN")}
-*Shipping:* ${shipping === 0 ? "FREE" : "₹" + shipping}
-*Total Payable:* ₹${total.toLocaleString("en-IN")}
-
-*Customer Details:*
-Name: ${name}
-Phone: ${phone}
-Address: ${address}`;
-
-      const url = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank", "noopener");
-    }
-
-    /* =====================================================================
-       7. OVERLAYS, MODAL & LOGO REPLAY CONTROLS
-       ===================================================================== */
-    function toggleCart(open) {
-      document.getElementById("cartDrawer").classList.toggle("open", open);
-      document.getElementById("backdrop").classList.toggle("open", open);
-    }
-
-    function openSizeModal() {
-      document.getElementById("sizeModal").classList.add("open");
-      document.getElementById("backdrop").classList.add("open");
-    }
-
-    function closeAllOverlays() {
-      document.getElementById("cartDrawer").classList.remove("open");
-      document.getElementById("sizeModal").classList.remove("open");
-      document.getElementById("backdrop").classList.remove("open");
-    }
-
-    function replayLogoAnimation() {
-      const svg = document.getElementById("paruthiEmblem");
-      svg.classList.add("replay-reset");
-      void svg.offsetWidth; // Force reflow
-      svg.classList.remove("replay-reset");
-    }
-
-    function showToast(msg) {
-      const toast = document.getElementById("toast");
-      toast.textContent = msg;
-      toast.classList.add("show");
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
-    }
-  </script>
-</body>
-</html>
+              <div class="cart-item-sub">Size: <strong>${item.size}</strong>
